@@ -1,3 +1,6 @@
+---
+[Turkish]("https://github.com/09u2h4n/blender_renderer/blob/main/doc/README_TR.md") | [English]("https://github.com/09u2h4n/blender_renderer/blob/main/README.md")
+---
 # **Blender Renderer on colab**
 It renders blender file with ".blend" extensions.
 

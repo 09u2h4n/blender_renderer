@@ -1,13 +1,13 @@
-# blender_renderer
+# **Blender Renderer on colab**
 It renders blender file with ".blend" extensions.
 
 [![Colab](https://img.shields.io/badge/Colab-F9AB00?style=for-the-badge&logo=googlecolab&color=525252)](https://colab.research.google.com/github/09u2h4n/blender_renderer/blob/main/blender_renderer_v01.ipynb)
 
-🌀 **Set Blender Usage**
+## 🌀 **Set Blender Usage**
 
 - `blender_ver` (Blender version): It will download blender and set the path.
 
-🖼️ **Render Single Image Usage**
+## 🖼️ **Render Single Image Usage**
 
 - `file_name` (File name to render): It will be in "(file_name).blend" format, like chess.blend.
 
@@ -21,7 +21,7 @@ It renders blender file with ".blend" extensions.
 
 - `hybrid_rendering` (Hybrid rendering): If checked, it will attempt to render using both CPU and GPU. However, if CPU is selected as the `cycles_device`, hybrid rendering is not possible.
 
-📽️ **Render Animation Usage**
+## 📽️ **Render Animation Usage**
 
 - `file_name` (File name to render): It will be in "(file_name).blend" format, like chess.blend.
 
@@ -35,7 +35,7 @@ It renders blender file with ".blend" extensions.
 
 - `hybrid_rendering` (Hybrid rendering): If checked, it will attempt to render using both CPU and GPU. However, if CPU is selected as the `cycles_device`, hybrid rendering is not possible.
 
-📅 **Frame's Setting**
+### 📅 **Frame's Setting**
 
 - `start_frame` (Start frame): Beginning of the frame range to render.
 

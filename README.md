@@ -5,7 +5,7 @@
 # **Blender Renderer on colab**
 It renders blender file with ".blend" extensions.
 
-[![Colab](https://img.shields.io/badge/Colab-F9AB00?style=for-the-badge&logo=googlecolab&color=525252)](https://colab.research.google.com/github/09u2h4n/blender_renderer/blob/main/blender_renderer_v01.ipynb)
+[![Colab](https://img.shields.io/badge/Colab-F9AB00?style=for-the-badge&logo=googlecolab&color=525252)](https://colab.research.google.com/github/09u2h4n/blender_renderer/blob/main/blender_renderer_v02.ipynb)
 
 ## 🌀 **Set Blender Usage**
 
@@ -23,7 +23,6 @@ It renders blender file with ".blend" extensions.
 
 - `cycles_device` (Cycles device): Override the device that is used to render frames.
 
-- `hybrid_rendering` (Hybrid rendering): If checked, it will attempt to render using both CPU and GPU. However, if CPU is selected as the `cycles_device`, hybrid rendering is not possible.
 
 ## 📽️ **Render Animation Usage**
 
@@ -33,13 +32,11 @@ It renders blender file with ".blend" extensions.
 
 - `render_engine` (Render engine): Specify the render engine.
 
-- `use_file_s_frame_settings` (Use file's frame settings): It uses the file's frame settings. If checked, you cannot use the frame's own settings.
-
 - `cycles_device` (Cycles device): Override the device that is used to render frames.
 
-- `hybrid_rendering` (Hybrid rendering): If checked, it will attempt to render using both CPU and GPU. However, if CPU is selected as the `cycles_device`, hybrid rendering is not possible.
-
 ### 📅 **Frame's Setting**
+
+- `use_file_s_frame_settings` (Use file's frame settings): It uses the file's frame settings. If checked, you cannot use the frame's own settings.
 
 - `start_frame` (Start frame): Beginning of the frame range to render.
 

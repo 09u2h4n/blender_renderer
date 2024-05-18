@@ -38,10 +38,10 @@ def download_blender(blender_version="4.0.2", download_path="default", redownloa
     print(f"Blender {blender_version} has been downloaded to {destination}")
 
 def set_blender_for_linux(blender_version="4.0.2", use_blender_on_drive=False, download_path="default"):
-    blender_download_path = download_path
-
     if download_path == "default":
         download_path = os.path.join("blender_downloads")
+
+    blender_download_path = download_path
 
     if use_blender_on_drive:
         try:

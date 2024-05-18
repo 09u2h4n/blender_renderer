@@ -7,7 +7,7 @@ def download_blender(blender_version="4.0.2", download_path="default", redownloa
     blender_urls = {
         "3.6.4": "https://ftp.nluug.nl/pub/graphics/blender/release/Blender3.6/blender-3.6.4-linux-x64.tar.xz",
         "4.0.2": "https://ftp.nluug.nl/pub/graphics/blender/release/Blender4.0/blender-4.0.2-linux-x64.tar.xz",
-        "latest": get_latest_blender_version_url()
+        "latest": get_latest_blender_version_url() if blender_version == "latest" else ""
     }
 
     blender_url = blender_urls.get(blender_version)
@@ -54,7 +54,7 @@ def set_blender_for_linux(blender_version="4.0.2", use_blender_on_drive=False, d
     else:
         blender_extract_path = blender_download_path
 
-    blender_folder_name = f"blender-{blender_ver}-linux-x64"
+    blender_folder_name = f"blender-{blender_version}-linux-x64"
     blender_tar_file_name = blender_folder_name + ".tar.xz"
     blender_archive_path = os.path.join(blender_download_path, blender_tar_file_name)
 
@@ -68,7 +68,7 @@ def set_blender_for_linux(blender_version="4.0.2", use_blender_on_drive=False, d
         with tarfile.open(blender_archive_path, 'r:xz') as tar:
             tar.extractall(path=blender_extract_path)
 
-        print(f"Blender {blender_ver} has been extracted to {blender_extract_path}.")
+        print(f"Blender {blender_version} has been extracted to {blender_extract_path}.")
 
     # Set Blender executable path
     blender_path = os.path.join(blender_extract_path, blender_folder_name, "blender")
@@ -78,7 +78,7 @@ def set_blender_for_linux(blender_version="4.0.2", use_blender_on_drive=False, d
         # Ensure executable permissions
         os.chmod(blender_path, stat.S_IRWXU)
 
-        print(f"Blender {blender_ver} has been set successfully.")
+        print(f"Blender {blender_version} has been set successfully.")
     else:
         print(f"Blender executable not found at {blender_path}.")
 

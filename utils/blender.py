@@ -1,4 +1,4 @@
-from utils import download_file, get_latest_blender_version_url
+from .utils import download_file, get_latest_blender_version_url
 import tarfile
 import os
 import stat

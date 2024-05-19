@@ -2,7 +2,7 @@ import os
 import bpy
 import json
 
-def animation_settings(blend_file_name="", output_path="default", resolution_x=1920, resolution_y=1080, output_extension="PNG", start_frame=None, end_frame=None, engine='CYCLES', samples=100, cycles_device='GPU', use_file_setting=False):
+def animation_settings(blend_file_name="", output_path="default", resolution_x=1920, resolution_y=1080, output_extension="PNG", start_frame=None, end_frame=None, engine='CYCLES', samples=100, gpu_acceleration="NONE", use_file_setting=False):
     """
     Renders a Blender file and prints a progress bar to the terminal.
 
@@ -14,35 +14,29 @@ def animation_settings(blend_file_name="", output_path="default", resolution_x=1
     - resolution_y (int): Vertical resolution of the output image.
     - engine (str): Rendering engine to use (e.g., 'CYCLES', 'BLENDER_EEVEE', etc.).
     - samples (int): Number of render samples.
-    - cycles_device (str): Device for rendering ("CPU", "CUDA", "OPTIX", "HIP", "ONEAPI", "METAL").
+    - gpu_acceleration (str): Device for rendering ("CPU", "CUDA", "OPTIX", "HIP", "ONEAPI", "METAL").
     - start_frame (str): First frame for animation.
     - end_frame (str): Last frame for animation.
     """
-    # Activate all available devices
-    for scene in bpy.data.scenes:
-        scene.cycles.device = cycles_device
-
     prefs = bpy.context.preferences
     cprefs = prefs.addons['cycles'].preferences
 
-    # Set the compute device type based on the cycles_device parameter
-    if cycles_device == 'GPU':
-        if 'CUDA' in cprefs.get_device_types():
-            cprefs.compute_device_type = 'CUDA'
-        elif 'OPTIX' in cprefs.get_device_types():
-            cprefs.compute_device_type = 'OPTIX'
-        elif 'HIP' in cprefs.get_device_types():
-            cprefs.compute_device_type = 'HIP'
-        elif 'ONEAPI' in cprefs.get_device_types():
-            cprefs.compute_device_type = 'ONEAPI'
-        elif 'METAL' in cprefs.get_device_types():
-            cprefs.compute_device_type = 'METAL'
-    else:
-        cprefs.compute_device_type = 'NONE'  # Use CPU
+    # Calling this purges the device list so we need it
+    cprefs.get_devices()
 
     # Enable all CPU and GPU devices
     for device in cprefs.devices:
         device.use = True
+
+    if gpu_acceleration == "NONE":
+        # Activate all available devices to device
+        for scene in bpy.data.scenes:
+            scene.cycles.device = "CPU"
+        cprefs.compute_device_type = gpu_acceleration
+    else:
+        for scene in bpy.data.scenes:
+            scene.cycles.device = "GPU"
+        cprefs.compute_device_type = gpu_acceleration
 
     if not use_file_setting:
         # Set render resolution

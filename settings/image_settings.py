@@ -73,6 +73,6 @@ if __name__ == "__main__":
     current_frame = json_data["current_frame"]
     engine = json_data["engine"]
     samples = json_data["samples"]
-    device = json_data["device"]
+    gpu_acceleration = json_data["gpu_acceleration"]
 
-    image_settings(output_extension=output_extension, resolution_x=resolution_x, resolution_y=resolution_y, engine=engine, samples=samples, device=device, current_frame=current_frame, use_file_setting=use_file_setting)
+    image_settings(output_extension=output_extension, resolution_x=resolution_x, resolution_y=resolution_y, engine=engine, samples=samples, gpu_acceleration=gpu_acceleration, current_frame=current_frame, use_file_setting=use_file_setting)

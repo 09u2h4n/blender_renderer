@@ -76,6 +76,6 @@ if __name__ == "__main__":
     end_frame = json_data["end_frame"]
     engine = json_data["engine"]
     samples = json_data["samples"]
-    cycles_device = json_data["cycles_device"]
+    gpu_acceleration = json_data["gpu_acceleration"]
 
-    animation_settings(output_extension=output_extension, resolution_x=resolution_x, resolution_y=resolution_y, engine=engine, samples=samples, cycles_device=cycles_device, start_frame=start_frame, end_frame=end_frame, use_file_setting=use_file_setting)
+    animation_settings(output_extension=output_extension, resolution_x=resolution_x, resolution_y=resolution_y, engine=engine, samples=samples, gpu_acceleration=gpu_acceleration, start_frame=start_frame, end_frame=end_frame, use_file_setting=use_file_setting)

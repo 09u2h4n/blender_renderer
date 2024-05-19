@@ -24,7 +24,7 @@ def run_blender_with_subprocess(render_animation = False):
     else:
         output_path = output_path
 
-    if blender_path:
+    if blender_path is None:
         print("Blender path is None please run set_blender() function.")
         return
 

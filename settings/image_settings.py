@@ -1,19 +1,8 @@
 import os
 import bpy
-import sys
-import subprocess
 import json
 
-def install_tqdm():
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "tqdm"])
-
-try:
-    from tqdm import tqdm
-except ImportError:
-    install_tqdm()
-    from tqdm import tqdm
-
-def image_settings(blend_file_name="", output_path="default", resolution_x=1920, resolution_y=1080, output_extension="PNG", current_frame=None, engine='CYCLES', samples=100, device='GPU', use_file_setting=False):
+def image_settings(blend_file_name="", output_path="default", resolution_x=1920, resolution_y=1080, output_extension="PNG", current_frame=None, engine='CYCLES', samples=100, cycles_device='GPU', use_file_setting=False):
     """
     Renders a Blender file and prints a progress bar to the terminal.
 
@@ -25,26 +14,30 @@ def image_settings(blend_file_name="", output_path="default", resolution_x=1920,
     - resolution_y (int): Vertical resolution of the output image.
     - engine (str): Rendering engine to use (e.g., 'CYCLES', 'BLENDER_EEVEE', etc.).
     - samples (int): Number of render samples.
-    - device (str): Device for rendering ("CPU", "CUDA", "OPTIX", "HIP", "ONEAPI", "METAL").
+    - cycles_device (str): Device for rendering ("CPU", "CUDA", "OPTIX", "HIP", "ONEAPI", "METAL").
     - current_frame (int or None): Current frame to render. If None, renders the current frame of the active scene.
     """
     # Activate all available devices
     for scene in bpy.data.scenes:
-        scene.cycles.device = device
+        scene.cycles.device = cycles_device
 
     prefs = bpy.context.preferences
     cprefs = prefs.addons['cycles'].preferences
 
-    # Calling this purges the device list so we need it
-    cprefs.get_devices()
-
-    # Attempt to set GPU device types if available
-    for compute_device_type in ('CUDA', 'OPENCL'):
-        try:
-            cprefs.compute_device_type = compute_device_type
-            break
-        except TypeError:
-            pass
+    # Set the compute device type based on the cycles_device parameter
+    if cycles_device == 'GPU':
+        if 'CUDA' in cprefs.get_device_types():
+            cprefs.compute_device_type = 'CUDA'
+        elif 'OPTIX' in cprefs.get_device_types():
+            cprefs.compute_device_type = 'OPTIX'
+        elif 'HIP' in cprefs.get_device_types():
+            cprefs.compute_device_type = 'HIP'
+        elif 'ONEAPI' in cprefs.get_device_types():
+            cprefs.compute_device_type = 'ONEAPI'
+        elif 'METAL' in cprefs.get_device_types():
+            cprefs.compute_device_type = 'METAL'
+    else:
+        cprefs.compute_device_type = 'NONE'  # Use CPU
 
     # Enable all CPU and GPU devices
     for device in cprefs.devices:
@@ -86,6 +79,6 @@ if __name__ == "__main__":
     current_frame = json_data["current_frame"]
     engine = json_data["engine"]
     samples = json_data["samples"]
-    device = json_data["device"]
+    cycles_device = json_data["cycles_device"]
 
-    image_settings(output_extension=output_extension, resolution_x=resolution_x, resolution_y=resolution_y, engine=engine, samples=samples, device=device, current_frame=current_frame, use_file_setting=use_file_setting)
+    image_settings(output_extension=output_extension, resolution_x=resolution_x, resolution_y=resolution_y, engine=engine, samples=samples, cycles_device=cycles_device, current_frame=current_frame, use_file_setting=use_file_setting)

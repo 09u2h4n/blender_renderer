@@ -2,7 +2,7 @@ import os
 import bpy
 import json
 
-def animation_settings(blend_file_name="", output_path="default", resolution_x=1920, resolution_y=1080, output_extension="PNG", start_frame=None, end_frame=None, engine='CYCLES', samples=100, gpu_acceleration="NONE", use_file_setting=False):
+def animation_settings(blend_file_name="", output_path="default", resolution_x=1920, resolution_y=1080, output_extension="PNG", start_frame=None, end_frame=None, fps=24, engine='CYCLES', samples=100, gpu_acceleration="NONE", use_file_setting=False):
     """
     Renders a Blender file and prints a progress bar to the terminal.
 
@@ -17,6 +17,7 @@ def animation_settings(blend_file_name="", output_path="default", resolution_x=1
     - gpu_acceleration (str): Device for rendering ("CPU", "CUDA", "OPTIX", "HIP", "ONEAPI", "METAL").
     - start_frame (str): First frame for animation.
     - end_frame (str): Last frame for animation.
+    - fps (int): Frames per second for the render.
     """
     prefs = bpy.context.preferences
     cprefs = prefs.addons['cycles'].preferences
@@ -57,6 +58,9 @@ def animation_settings(blend_file_name="", output_path="default", resolution_x=1
         elif engine == 'BLENDER_EEVEE':
             bpy.context.scene.eevee.taa_render_samples = samples
 
+        # Set fps
+        bpy.context.scene.render.fps = fps
+
         # Set output_extension
         bpy.context.scene.render.image_settings.file_format = output_extension.upper()
 
@@ -77,5 +81,6 @@ if __name__ == "__main__":
     engine = json_data["engine"]
     samples = json_data["samples"]
     gpu_acceleration = json_data["gpu_acceleration"]
+    fps = json_data["fps"]
 
-    animation_settings(output_extension=output_extension, resolution_x=resolution_x, resolution_y=resolution_y, engine=engine, samples=samples, gpu_acceleration=gpu_acceleration, start_frame=start_frame, end_frame=end_frame, use_file_setting=use_file_setting)
+    animation_settings(output_extension=output_extension, resolution_x=resolution_x, resolution_y=resolution_y, engine=engine, samples=samples, gpu_acceleration=gpu_acceleration, fps=fps, start_frame=start_frame, end_frame=end_frame, use_file_setting=use_file_setting)

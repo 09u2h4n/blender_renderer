@@ -26,7 +26,7 @@ def run_blender_with_subprocess(render_animation = False):
 
     if blender_path:
         print("Blender path is None please run set_blender() function.")
-        exit()
+        return
 
     image_render_command = [blender_path, "-b", blend_file_path, "-o" , output_path, "-P", "/content/settings/image_settings.py"]
     animation_render_command = [blender_path, "-b", blend_file_path, "-o" , output_path, "-P", "/content/settings/animation_settings.py", "-a"]
